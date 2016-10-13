@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Miniservers
+{% endblock %}
+
+{% block menu %}
+	{% include 'bttviewer/menu.html'%}
+{% endblock %}
+
+{% block banner %}
+	{% include 'bttviewer/banner.html'%}
+{% endblock %}
+
+{% block content %}
+	
+	<div class="row">
+			<div class="container">
+			{% if MiniServers %}
+				<div class="row">
+					<h1>Servidors configurats : </h1>
+				</div>
+				{% for server in MiniServers %}
+				<div class="row">
+					<div class="col-xs-12">
+						<h3>
+							<!--<a href="/miniserver/{{ server.id }}">{{ server.a_name }} -> {{ server.a_path }}</a>-->
+							<a href="/miniserver/{{ server.id }}">
+								{{ server.a_name }} -> {{ server.a_path }}
+							</a>
+						</h3>
+					</div>
+				</div> 
+				{% endfor %}
+			{% else %}
+			<div class="col-xs-12">
+				<h3>NO TENIM MINISERVERS </h3>
+				<p>Configura Miniservers des del panell <a href="{% url 'admin:index' %}">ADMINISTRADOR</a></p>
+			</div>
+			{% endif %}
+			</div>
+		</div>
+
+{% endblock %}
+
+{% block footer %} {% endblock %}

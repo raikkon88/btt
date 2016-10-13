@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Miniservers
+{% endblock %}
+
+{% block menu %}
+	{% include 'bttviewer/menu.html'%}
+{% endblock %}
+
+{% block banner %}
+	{% include 'bttviewer/banner.html'%}
+{% endblock %}
+
+{% block content %}
+	
+	<div class="container">
+		<div class="row">
+			{% if PlaneObjects %}
+				<div class="row">
+					<h1> Planos Configurats al miniserver : {{ plane.a_server.a_name }} </h1>
+				</div>
+				{% for plane in PlaneObjects %}
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<h3><a href="/plane/{{ plane.id }}">{{ plane.a_name }}</h3></p>
+					</div>
+				</div> 
+				{% endfor %}
+			{% else %}
+			<div class="col-xs-12">
+				<h3>NO TENIM PLANOS PER AQUEST MINISERVER </h3>
+				<p>Configura Planos des del panell <a href="{% url 'admin:index' %}">ADMINISTRADOR</a></p>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block footer %} {% endblock %}
