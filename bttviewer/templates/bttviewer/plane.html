@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}	
+
+{% block title %}
+	Plano {% if plane %}"{{ plane }}"{% else %} no trobat{% endif %}
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static 'bttviewer/js/model/BttEnginyers.js' %}"></script>
+{% endblock %}
+
+{% block menu %}
+	{% include 'bttviewer/menu.html'%}
+{% endblock %}
+
+{% block banner %}
+	{% include 'bttviewer/banner.html'%}
+{% endblock %}
+
+{% block content %}
+	<div class="plane-content" style="padding-top : 20px;">
+
+	{% if plane %}
+		<div class="row" style="min-height: 100%;display: flex;align-items: center;">
+			<div class="col-xs-10">
+				<h2>Plànol : {{ plane.a_name }}</h2>
+			</div>
+			<div class="col-xs-2 desar_button_div">
+				<button class="desar_button btn btn-primary" onclick="save()">GUARDAR</button>
+			</div> 
+		</div>	
+
+
+		<div class="alert alert-danger" role="alert" id="sendNotOk">
+		  Quelcom ha anat malament i no s'han pogut actualitzar els elements, contacta amb l'administrador. Gràcies per el feedback!! 
+		</div>
+		<div class="alert alert-success" role="alert" id="sendOk">
+		  Elements modificats correctament
+		</div>
+
+		<script>
+			$('#sendNotOk').hide();
+			$('#sendOk').hide();
+		</script>
+
+		<div class="row">
+			<div class="col-xs-2">
+				<div style="width:100%;">
+				{% if objects %}
+					{% for object in objects %}
+							<div class="col-xs-8">
+								
+							{{ object.a_name }}
+							</div>
+							<div class="col-xs-4">
+							{% include 'bttviewer/list_object.html' with object=object type="sonda" %}
+							</div>
+							
+				
+					{% endfor %}
+				{% endif %}
+				</div>
+			</div>
+
+			<div class="col-xs-10">
+				<div class="img_container" style="border:5px solid rgb(213,213,213)">
+					<img class="" src="{{ STATIC_URL }}{{ plane.a_image }}" style="width:100%;position:relative"/>
+				</div>
+			</div>
+		</div>
+
+	{% endif %}
+
+
+	</div>
+{% endblock %}

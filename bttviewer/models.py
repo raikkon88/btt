@@ -36,7 +36,7 @@ class MiniServer(models.Model):
 ###################################################################################################
 class Plane(models.Model):
     a_name = models.CharField(max_length=100, default='', verbose_name='Nom')
-    a_image = models.ImageField(upload_to='media/%Y/%m/%d', verbose_name='Planol')
+    a_image = models.ImageField(upload_to='media',  verbose_name='Planol')
     a_server = models.ForeignKey(MiniServer, on_delete=models.CASCADE, verbose_name='Miniserver')
 
     ## Text seen in django admin
@@ -44,6 +44,10 @@ class Plane(models.Model):
     def __unicode__(self):
         print (self.a_server.getSelectString())
         return self.a_server.a_name + " -> " + self.a_name
+
+    def getImageName(self):
+        print self.a_image
+
 
 ###################################################################################################
 # BASE OBJECTS
@@ -65,7 +69,7 @@ class BaseObject(models.Model):
     a_name = models.CharField(max_length=200, default='Element', verbose_name='Name')
     a_query = models.CharField(max_length=150, default='', verbose_name='Path (query to be done into Miniserver)')
     a_plane = models.ForeignKey(Plane, default=1, on_delete=models.CASCADE, verbose_name='Plane relation')
-
+    
     ## Says that permits heritance in class.
     class Meta:
         abstract = True
@@ -95,11 +99,21 @@ class BaseObject(models.Model):
             print("Unexpected error:", sys.exc_info())
             return "Error"
 
-    ##
-    ##
-    ##
+    ## Returns the image path for this object
+    ## 
     def getImagePath(self):
         return settings.MEDIA_ROOT
+
+    ## This property returns the type for the self isntance as string
+    ## 
+    @property
+    def type(self):
+        ty = str(type(self)).replace('\r\n', '');
+        print ty
+        result = re.match(r".*\.(\w*?)'", ty)
+        return result.group(1)
+        
+
 
 ###################################################################################################
 # MINISERVER OBJECTS
@@ -110,6 +124,7 @@ class BooleanObject(BaseObject):
     a_value = models.NullBooleanField(editable=False, null=True)
     a_image_on = models.ImageField(upload_to='images', default="", verbose_name='Image ON')
     a_image_off = models.ImageField(upload_to='images', default="", verbose_name='Image OFF')
+
 
     ## Text seen in django admin
     ## Return a string 
@@ -134,9 +149,10 @@ class BooleanObject(BaseObject):
 class AnalogObject(BaseObject):
 
     a_value = models.FloatField(editable=False, null=True)
-
+    a_isFlag = models.BooleanField(editable=False, default=False) # is or not a flag.
     BaseObject._meta.get_field('a_width').verbose_name = "Width (Minim: 60px)"
     BaseObject._meta.get_field('a_height').verbose_name = "Height (Minim: 25px)"
+    
 
     ## Text seen in django admin
     ## Return a string 
@@ -153,24 +169,24 @@ class AnalogObject(BaseObject):
 # MINISERVER OBJECTS
 # - This class is used to store the configuration for a miniserver
 ###################################################################################################
-class AnalogFlagObject(BaseObject):
+#class AnalogFlagObject(BaseObject):
 
-    a_value = models.FloatField(editable=False, null=True)
-    a_image = models.ImageField(upload_to='images', default="", verbose_name='Image FLAG')    
+    #a_value = models.FloatField(editable=False, null=True)
+    #a_image = models.ImageField(upload_to='images', default="", verbose_name='Image FLAG')    
     # OVERRIDING 
-    BaseObject._meta.get_field('a_width').verbose_name = "Width (Minim: 60px)"
-    BaseObject._meta.get_field('a_height').verbose_name = "Height (Minim: 25px)"
+    #BaseObject._meta.get_field('a_width').verbose_name = "Width (Minim: 60px)"
+    #BaseObject._meta.get_field('a_height').verbose_name = "Height (Minim: 25px)"
 
     ## Text seen in django admin
     ## Return a string 
-    def __unicode__(self):
-        return 'Consigna: ' + self.a_name
+    #def __unicode__(self):
+        #return 'Consigna: ' + self.a_name
 
     ## Particular logic for flag requests
     ## assign number as string into the a_value, if error returns 'Error'
-    def makeRequest(self, path):
-        result = super(AnalogFlagObject, self).makeRequest(path)
-        self.a_value = result + 'º'
+    #def makeRequest(self, path):
+        #result = super(AnalogFlagObject, self).makeRequest(path)
+        #self.a_value = result + 'º'
 
 ###################################################################################################
 # MINISERVER OBJECTS
@@ -182,6 +198,7 @@ class Valve3WaysObject(BaseObject):
     a_image_a = models.ImageField(upload_to='images', default="", verbose_name='Image (A -> AB) / (ON)')
     a_image_b = models.ImageField(upload_to='images', default="", verbose_name='Image (B -> AB) / (OFF)')
     a_image_ab = models.ImageField(upload_to='images', default="", verbose_name='Image A+B -> AB')
+
 
     ## Text seen in django admin
     ## Return a string 

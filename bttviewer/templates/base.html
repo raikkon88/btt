@@ -4,6 +4,8 @@
 <head>
 	{% load staticfiles %}	
 
+	 <meta charset="UTF-8"> 
+
 	<!-- estils --> 
 	<link rel="stylesheet" type="text/css" href="{% static 'bttviewer/style.css' %}" />
 	<link rel="stylesheet" type="text/css" href="{% static 'bttviewer/css/bootstrap.css' %}" />
@@ -11,7 +13,10 @@
 	<script src="{% static 'bttviewer/jquery/dist/jquery.js' %}"></script>
 	<script src="{% static 'bttviewer/jquery-ui/jquery-ui.js' %}"></script>
 	<script src="{% static 'bttviewer/js/scripts.js' %}"></script>
-	<script src="{% static 'bttviewer/js/model/BttEnginyers.js' %}"></script>
+	
+	{% block scripts %}
+
+	{% endblock %}
 
 	<title>
 	{% block title %}
@@ -19,9 +24,7 @@
 	{% endblock %}
 	</title>
 	<!-- Here we can load new scripts. --> 
-	{% block scripts %}
 
-	{% endblock %}
 
 </head>
 <body>

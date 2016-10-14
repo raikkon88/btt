@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader, RequestContext
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .models import BooleanObject
-from .models import AnalogFlagObject
+from django.conf import settings
+#from .models import AnalogFlagObject
 from .models import AnalogObject
 from .models import Valve3WaysObject
 from .models import MiniServer
@@ -22,6 +23,7 @@ import sys
 
 def CustomRender(file, request, parameters):
 	parameters['base_url'] = request.META['HTTP_HOST']
+	parameters['STATIC_URL'] = 'http://' + request.META['HTTP_HOST'] + settings.STATIC_URL
 	return render(
 		request,
 		file,
@@ -45,15 +47,33 @@ def home(request):
 	}
 	return CustomRender('bttviewer/home.html',request, parameters)
 
+
 @login_required(login_url='/login')
 def miniserver(request, miniserver_id):
-	plane_objects = Plane.objects.get(a_server_id=miniserver_id)
+	plane_objects = Plane.objects.filter(a_server_id=miniserver_id)
 	parameters = {
 		'PlaneObjects' : plane_objects
 	}
 	#return HttpResponse(template.render(context, request))
 	return CustomRender('bttviewer/miniserver.html', request, parameters)
 
+@login_required(login_url='/login')
+def plane(request, plane_id):
+	plane_obj = Plane.objects.get(pk=plane_id)
+	objects = AnalogObject.objects.filter(a_plane=plane_obj)
+	parameters = {
+		'plane' : plane_obj,
+		'objects' : objects,
+	}
+	return CustomRender('bttviewer/plane.html', request, parameters)
+
+
+
+
+@login_required(login_url='/login')
+def request_value(request, object_id):
+	baseObj = BaseObject.objects.get(pk=object_id)
+	return 25
 
 ###################################################################################################
 # LOGIN AND SESSION CALLS: 
