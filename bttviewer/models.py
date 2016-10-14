@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
-
 from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from btt import settings
 import requests
 import sys
 import re
@@ -36,7 +36,7 @@ class MiniServer(models.Model):
 ###################################################################################################
 class Plane(models.Model):
     a_name = models.CharField(max_length=100, default='', verbose_name='Nom')
-    a_image = models.ImageField(upload_to='images', default='', verbose_name='Planol')
+    a_image = models.ImageField(upload_to='media/%Y/%m/%d', verbose_name='Planol')
     a_server = models.ForeignKey(MiniServer, on_delete=models.CASCADE, verbose_name='Miniserver')
 
     ## Text seen in django admin

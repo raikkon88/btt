@@ -15,6 +15,11 @@ import json
 import re
 import sys
 
+###################################################################################################
+# RENDERS
+# - Custom renders to add the differents parameters needed to work.
+###################################################################################################
+
 def CustomRender(file, request, parameters):
 	parameters['base_url'] = request.META['HTTP_HOST']
 	return render(
@@ -27,19 +32,37 @@ def CustomRender(file, request, parameters):
 def SimpleCustomRender(file, request):
 	return CustomRender(file, request, {})
 
+###################################################################################################
+# PAGES
+# - This are the different pages accessible for login users
+###################################################################################################
+
 @login_required(login_url='/login')
 def home(request):
 	miniserver_objects = MiniServer.objects.all()
-	template = loader.get_template('bttviewer/home.html')
-	context = {
+	parameters = {
 		'MiniServers' : miniserver_objects,
 	}
-	return SimpleCustomRender('bttviewer/home.html',request)
+	return CustomRender('bttviewer/home.html',request, parameters)
+
+@login_required(login_url='/login')
+def miniserver(request, miniserver_id):
+	plane_objects = Plane.objects.get(a_server_id=miniserver_id)
+	parameters = {
+		'PlaneObjects' : plane_objects
+	}
+	#return HttpResponse(template.render(context, request))
+	return CustomRender('bttviewer/miniserver.html', request, parameters)
+
+
+###################################################################################################
+# LOGIN AND SESSION CALLS: 
+# - This are the different login requests. 
+###################################################################################################
 
 def user_login(request):
-
+	
 	context = RequestContext(request)
-
 	if request.user.is_authenticated():
 		return home(request)
 	else:

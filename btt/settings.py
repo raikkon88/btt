@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'bttviewer.apps.BttviewerConfig',
+    'bttviewer',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -118,4 +118,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'bttviewer/static/media')
+MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
