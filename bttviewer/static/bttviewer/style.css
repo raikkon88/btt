@@ -20,6 +20,17 @@
 	list-style: none;
 }
 
+.list-item-header{
+	min-height: 30px;
+	margin-bottom: 10px;
+	border: 3px solid #D5D5D5;
+
+}
+
+.list-item{
+	width:100%;
+}
+
 .objecte{
 	background-color: rgb(239,194,17);
 }

@@ -45,31 +45,53 @@
 		</script>
 
 		<div class="row">
-			<div class="col-xs-2">
-				<div style="width:100%;">
+			<div class="col-xs-3">
+				<div class="list-item-header">
+					<div class="col-xs-8">
+						<p class="header"><b>Nom</b></p>
+					</div>
+					<div class="col-xs-4">
+						<p><b>Valor</b></p>
+					</div>
+				</div>
 				{% if objects %}
 					{% for object in objects %}
+					<div class="list-item">
 							<div class="col-xs-8">
-								
 							{{ object.a_name }}
 							</div>
-							<div class="col-xs-4">
-							{% include 'bttviewer/list_object.html' with object=object type="sonda" %}
+							<div id="{{object.type }}-{{ object.pk }}-container" class="col-xs-4 ">
+							{% if object.a_moved %}
+								<span>{{ object.a_value }}</span>
+							{% else %}
+								{% include 'bttviewer/list_object.html' with object=object %}
+							{% endif %}
 							</div>
-							
-				
+					</div>
 					{% endfor %}
 				{% endif %}
-				</div>
+				
 			</div>
 
-			<div class="col-xs-10">
+			<div class="col-xs-9">
 				<div class="img_container" style="border:5px solid rgb(213,213,213)">
 					<img class="" src="{{ STATIC_URL }}{{ plane.a_image }}" style="width:100%;position:relative"/>
+					{% if objects %}
+						{% for object in objects %}
+								{% if object.a_moved %}
+									{% include 'bttviewer/list_object.html' with object=object %}
+								{% endif %}
+						{% endfor %}
+					{% endif %}
 				</div>
 			</div>
 		</div>
 
+	{% else %}
+	<div class="row">
+		<h2>No hi ha res a mostrar</h2>
+		<p></p>
+	</div>
 	{% endif %}
 
 

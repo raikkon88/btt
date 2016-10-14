@@ -1,16 +1,32 @@
 
 
-<div id="{{ object.type }}-{{ object.pk }}" class="obj" 
-	style="width:{{ object.a_width }}px;
-		   height:{{ object.a_height }}px;
-		   background:{{ object.a_color }};
-		   float:left;
-		   -webkit-transform:rotate({{object.a_rotation}}deg);
-		   -ms-transform:rotate({{object.a_rotation}}deg);
-		   transform:rotate({{object.a_rotation}}deg);" align="center"> 
-
-	<span class="sonda_value">{{ object.a_value }}</span>
-</div>
-
+	<div id="{{ object.type }}-{{ object.pk }}" class="obj" 
+		style="width:{{ object.a_width }}px;
+			   height:{{ object.a_height }}px;
+			   background:{{ object.a_color }};
+			   float:left;
+			   -webkit-transform:rotate({{object.a_rotation}}deg);
+			   -ms-transform:rotate({{object.a_rotation}}deg);
+			   transform:rotate({{object.a_rotation}}deg);" align="center"> 
+		{% if object.type == 'BooleanObject' %}
+			{% if object.a_value %}
+				<img src="{{ STATIC_URL }}{{ object.a_image_on }}" style="width:{{ object.a_width }}px"/>				
+			{% else %}
+				<img src="{{ STATIC_URL }}{{ object.a_image_off }}" style="width:{{ object.a_width }}px;height:{{ object.a_height }}px;"/>	
+			{% endif %}
+		{% elif object.type == 'Valve3WaysObject' %}
+			{% if object.a_as_boolean %}
+				{% if object.a_value == 100 %}
+					<img src="{{ STATIC_URL }}{{ object.a_image_a }}" style="width:{{ object.a_width }}px"/>
+				{% else %}
+					<img src="{{ STATIC_URL }}{{ object.a_image_b }}" style="width:{{ object.a_width }}px"/>
+				{% endif %}
+			{% else %}
+				<img src="{{ STATIC_URL }}{{ object.a_image_ab }}" style="width:{{ object.a_width }}px"/>
+			{% endif %}
+		{% else %}
+		<span class="sonda_value">{{ object.a_value }}</span>
+		{% endif %}	
+	</div>
 
 

@@ -109,7 +109,6 @@ class BaseObject(models.Model):
     @property
     def type(self):
         ty = str(type(self)).replace('\r\n', '');
-        print ty
         result = re.match(r".*\.(\w*?)'", ty)
         return result.group(1)
         
@@ -122,8 +121,11 @@ class BaseObject(models.Model):
 class BooleanObject(BaseObject):
 
     a_value = models.NullBooleanField(editable=False, null=True)
-    a_image_on = models.ImageField(upload_to='images', default="", verbose_name='Image ON')
-    a_image_off = models.ImageField(upload_to='images', default="", verbose_name='Image OFF')
+    a_image_on = models.ImageField(upload_to='media', verbose_name='Image ON')
+    a_image_off = models.ImageField(upload_to='media',  verbose_name='Image OFF')
+    BaseObject._meta.get_field('a_width').verbose_name = "Width (Minim: 30px)"
+    BaseObject._meta.get_field('a_height').verbose_name = "Height (Minim: 30px)"
+    
 
 
     ## Text seen in django admin
@@ -195,9 +197,12 @@ class AnalogObject(BaseObject):
 class Valve3WaysObject(BaseObject):
     a_value = models.FloatField(editable=False, null=True)
     a_as_boolean = models.NullBooleanField(editable=False, null=True)
-    a_image_a = models.ImageField(upload_to='images', default="", verbose_name='Image (A -> AB) / (ON)')
-    a_image_b = models.ImageField(upload_to='images', default="", verbose_name='Image (B -> AB) / (OFF)')
-    a_image_ab = models.ImageField(upload_to='images', default="", verbose_name='Image A+B -> AB')
+    a_image_a = models.ImageField(upload_to='media', verbose_name='Image (A -> AB) / (ON)')
+    a_image_b = models.ImageField(upload_to='media', verbose_name='Image (B -> AB) / (OFF)')
+    a_image_ab = models.ImageField(upload_to='media', verbose_name='Image A+B -> AB')
+    BaseObject._meta.get_field('a_width').verbose_name = "Width (Minim: 30px)"
+    BaseObject._meta.get_field('a_height').verbose_name = "Height (Minim: 30px)"
+    
 
 
     ## Text seen in django admin

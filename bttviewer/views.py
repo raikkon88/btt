@@ -7,10 +7,12 @@ from django.contrib.auth.decorators import login_required
 from .models import BooleanObject
 from django.conf import settings
 #from .models import AnalogFlagObject
+from .models import BaseObject
 from .models import AnalogObject
 from .models import Valve3WaysObject
 from .models import MiniServer
 from .models import Plane
+from itertools import chain
 import requests
 import json
 import re
@@ -60,7 +62,13 @@ def miniserver(request, miniserver_id):
 @login_required(login_url='/login')
 def plane(request, plane_id):
 	plane_obj = Plane.objects.get(pk=plane_id)
-	objects = AnalogObject.objects.filter(a_plane=plane_obj)
+	
+	analogs = AnalogObject.objects.filter(a_plane=plane_obj)
+	booleans = BooleanObject.objects.filter(a_plane=plane_obj)
+	valves = Valve3WaysObject.objects.filter(a_plane=plane_obj)
+
+	objects = list(chain(analogs, booleans, valves))
+
 	parameters = {
 		'plane' : plane_obj,
 		'objects' : objects,
