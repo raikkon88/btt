@@ -4,10 +4,11 @@ from django.template import loader, RequestContext
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import BooleanObject
+
+from django.core import serializers
 from django.conf import settings
 #from .models import AnalogFlagObject
-from .models import BaseObject
+from .models import BooleanObject
 from .models import AnalogObject
 from .models import Valve3WaysObject
 from .models import MiniServer
@@ -68,10 +69,12 @@ def plane(request, plane_id):
 	valves = Valve3WaysObject.objects.filter(a_plane=plane_obj)
 
 	objects = list(chain(analogs, booleans, valves))
+	json_objects = serializers.serialize("json",objects)
 
 	parameters = {
 		'plane' : plane_obj,
 		'objects' : objects,
+		'json_objects':json_objects,
 	}
 	return CustomRender('bttviewer/plane.html', request, parameters)
 

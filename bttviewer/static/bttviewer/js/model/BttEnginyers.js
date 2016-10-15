@@ -46,7 +46,8 @@ class BaseObject {
 		if(!moved){
 			this.x = 0;
 			this.y = 0;
-			this.moved = "";
+			// El següent valor dona problemes si té valor.
+			this.moved = ""; // Aquest valor ha d'estar buit per poder fer bé la valoració. 
 		}
 		else 
 		{
@@ -114,17 +115,14 @@ class BaseObject {
 	getTheModel(djangoModel){
 		var toReturn; 
 		switch(djangoModel){
-			case "polls.booleanobject":
-				toReturn ="bool";
+			case "bttviewer.booleanobject":
+				toReturn ="BooleanObject";
 			break;
-			case "polls.valve3waysobject":
-				toReturn ="valve";
+			case "bttviewer.valve3waysobject":
+				toReturn ="Valve3WaysObject";
 			break;
-			case "polls.analogflagobject":
-				toReturn ="consigna";
-			break;
-			case "polls.analogobject":
-				toReturn ="sonda";
+			case "bttviewer.analogobject":
+				toReturn ="AnalogObject";
 			break;
 		}
 		return toReturn;
@@ -134,16 +132,13 @@ class BaseObject {
 	getDatabaseType(){
 		var toReturn;
 		switch(this.modelType){
-			case "bool":
+			case "BooleanObject":
 				toReturn = "booleanobjects";
 			break;
-			case "valve":
+			case "Valve3WaysObject":
 				toReturn = "valve3waysobjects";
 			break;
-			case "consigna":
-				toReturn = "analogflagobjects";
-			break;
-			case "sonda":
+			case "AnalogObject":
 				toReturn = "analogobjects";
 			break;
 		}

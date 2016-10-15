@@ -6,10 +6,43 @@
 
 // GLOBAL OBJECTS *******************************************************
 var init = new Map();
-var templates = new Map();
-var moved = new Map();
-var inserted = new Map();
 
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    console.log("2 - s'ha retornat el valor de la cookie amb protecció. ");
+    return cookieValue;
+}
+
+console.log("1 - es crida a la cookie ");
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+console.log("3 - S'instancia la crida ajax")
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+console.log("4 - crida instanciada");
 // ONLOAD FUNCTIONS *******************************************************
 
 // Pre: -- 
@@ -29,17 +62,186 @@ $(function reload(){
 		snap: true,
 	});
 
+	$(".img_container").find(".obj").dblclick(function(self) {
+			var target = self.currentTarget;
+			console.log(target.id);
+
+  			var img = $(".img_container");
+  			var item = img.find("#"+target.id).clone();
+  			init[target.id].setMoved(false);
+  			
+  			var listId = "#"+target.id+"-container";
+  			console.log(item);
+  			item[0].style.left = "0px";
+  			item[0].style.top   = "0px";
+  			item[0].style.position = "relative";
+
+  			item.draggable({
+				stack: ".obj",
+				cursor: "move",
+				revert:true,
+				distance: 10,
+				snap:true,
+			});
+
+  			item.appendTo(listId);
+
+
+  			img.find("#"+target.id).remove();
+  			
+		});
+
 });
+
+/// NEW FUNCTIONS _________________________________________________________________________________
+
+// PRE: map empty, list conté els objectes a transformar en json.
+// POST: Emplena el map amb els objectes de list transformats en BaseObject.
+function insertListToMap(map, list, path){
+
+	for(var i = 0; i < list.length; i++){
+		var obj = new BaseObject();
+		obj.createFromJson(list[i], path);
+		map[obj.getKey()] = obj;
+
+		console.log(obj);
+	}
+}
+
+
+// DRAGGABLE FUNCTIONS *******************************************************
+
+// Pre: event-> event generat per el dreggable, ui-> objecte mogut
+// Post: implementa la lògica del moviment després d'arrossegar l'objecte
+function dropToImg(event, ui){
+
+	// Recullo la imatge
+	var img = $(".img_container");
+	// Miro si està inserit o no.
+	var inserted = img.find(ui.draggable[0]).length != 0;
+
+	// Permeto que es reverteixi si no es compleix la restricció.
+	ui.draggable.draggable( 'option', 'revert', false );
+
+	// Obtinc i actualitzo l'element a inserir.
+
+	var element = ui.draggable.clone();
+	element[0].style.position= "absolute";
+	element[0].style.left = (ui.offset.left - img.offset().left - 4) + "px";
+	element[0].style.top = (ui.offset.top - img.offset().top  - 4) + "px";
+
+	// El torno a fer draggable
+	element.draggable({
+		stack: ".obj",
+		cursor: "move",
+		revert:true,
+		distance: 10,
+		snap:true,
+	});
+
+
+	if(!inserted){
+		element.appendTo('.img_container');
+		
+
+		element.dblclick(function(self) {
+			var target = self.currentTarget;
+			console.log(target.id);
+
+  			var img = $(".img_container");
+  			var item = img.find("#"+target.id).clone();
+  			init[target.id].setMoved(false);
+  			
+  			var listId = "#"+target.id+"-container";
+  			console.log(item);
+  			item[0].style.left = "0px";
+  			item[0].style.top   = "0px";
+  			item[0].style.position = "relative";
+
+  			item.draggable({
+				stack: ".obj",
+				cursor: "move",
+				revert:true,
+				distance: 10,
+				snap:true,
+			});
+
+  			item.appendTo(listId);
+
+
+  			img.find("#"+target.id).remove();
+  			
+		});
+	}
+	// Elimino l'element que ja he inserit.
+	updateObject(ui.draggable, inserted);
+}
+
+
+// Pre: obj->objecte mogut, notInserted-> si true no està inserit a la imatge, si false està inserit a la imatge
+// Post: Insereix o actualitza l'objecte que s'ha mogut.
+function updateObject(obj, inserted){
+
+	var img = $(".img_container");
+	var baseObject;
+	if(!inserted){
+
+		baseObject = init[obj[0].id];
+		baseObject.update(obj, img);
+		baseObject.setMoved(true);
+
+		// Eliminem l'element de la llista
+		var list = $("#items-list").find("#"+baseObject.getKey()).remove();
+
+	}
+	else{
+		// Actualitzem els objectes que tenim a les llistes. 
+		init[obj[0].id].update(obj, img);
+	}
+
+
+}
+
+// PRE: --
+// POST: Actualitza tots els elements del map global modified
+function save(){
+	// Converts all objects in a json map.
+	var json = JSON.stringify(init);
+	console.log(init);
+	// Makes the ajax petition.
+	$.ajax({
+    	url: 'http://localhost:8000/ws/processobjects/',
+    	type: "POST",
+    	data: json,
+    	success: function (response) {
+    		// Ensenyem un popup conforme s'ha enviat correctament.
+    		$('#sendOk').show().delay(5000).fadeOut();
+    	},   
+		error: function (response){
+			// Ensenyem un popup conforme no s'ha pogut enviar la petició.
+			$('#sendNotOk').show().delay(5000).fadeOut();
+		},
+	});
+}
+
+
+
+
+
+/// OLD FUNCTIONS _________________________________________________________________________________
 
 // PRE: json conté les dades dels objectes rebuts
 // POST: Genera els contenidors adients per els diferents objectes rebuts.
-function createTemplate(json, path){
+/*function createTemplate(json, path){
 
 	var element;
 	var model;
+
+	console.log(json);
+
 	switch (json.model){
-		case "polls.booleanobject":
-			model = "bool";
+		case "bttviewer.booleanobject":
+			model = "BooleanObject";
 			element = $('<div id="bool-'+json.pk+
 						'" class="obj" style="width:'+json.fields.a_width+
 						'px;height:'+json.fields.a_height+
@@ -56,8 +258,8 @@ function createTemplate(json, path){
 			}
 			image.appendTo(element);
 		break;
-		case "polls.valve3waysobject":
-			model = "valve";
+		case "bttviewer.valve3waysobject":
+			model = "Valve3WaysObject";
 			element = $('<div id="valve-'+json.pk+'" '+
 							 'class="obj" '+
 							 'style="width:'+json.fields.a_width+'px;' +
@@ -88,20 +290,9 @@ function createTemplate(json, path){
 			image.appendTo(imageDiv);
 			valueDiv.appendTo(element);
 			imageDiv.appendTo(element);
-
 		break;
-		case "polls.analogflagobject":
-			model = "consigna";
-			element = $('<div id="consigna-'+json.pk+
-						'" class="obj" style="width:'+json.fields.a_width+
-						'px;height:'+json.fields.a_height+
-						'px;background:'+json.fields.a_color+
-						';float:left" align="center"> <span class="consigna_value">'+json.fields.a_value+
-						'º</span><img src="'+ path +json.fields.a_image+
-						'"></div>');
-		break;
-		case "polls.analogobject":
-			model = "sonda";
+		case "bttviewer.analogobject":
+			model = "AnalogObject";
 			element = $('<div id="sonda-'+ json.pk +
 						'" class="obj" style="width:'+json.fields.a_width+
 						'px;height:'+json.fields.a_height+
@@ -128,82 +319,6 @@ function createTemplate(json, path){
 }
 
 
-// PRE: map empty, list conté els objectes a transformar en json.
-// POST: Emplena el map amb els objectes de list transformats en BaseObject.
-function insertListToMap(map, list, path){
-
-	for(var i = 0; i < list.length; i++){
-		var obj = new BaseObject();
-		createTemplate(list[i], path);
-		obj.createFromJson(list[i]);
-		map[obj.getKey()] = obj;
-	}
-}
-
-
-// DRAGGABLE FUNCTIONS *******************************************************
-
-// Pre: event-> event generat per el dreggable, ui-> objecte mogut
-// Post: implementa la lògica del moviment després d'arrossegar l'objecte
-function dropToImg(event, ui){
-
-	// Recullo la imatge
-	var img = $(".img_container");
-	// Permeto que es reverteixi si no es compleix la restricció.
-	ui.draggable.draggable( 'option', 'revert', false );
-
-	// Obtinc i actualitzo l'element a inserir.
-	var element = ui.draggable.clone();
-	element[0].style.position= "absolute";
-	element[0].style.left = (ui.offset.left - img.offset().left - 4) + "px";
-	element[0].style.top = (ui.offset.top - img.offset().top  - 4) + "px";
-
-	// El torno a fer draggable
-	element.draggable({
-		stack: ".obj",
-		cursor: "move",
-		revert:true,
-		distance: 10,
-		snap:true,
-	});
-
-	// En cas que no estigui afegit l'afegeixo a dins del div de la imatge
-	var notInserted = img.find(ui.draggable[0]).length == 0;
-	if(notInserted){
-		element.appendTo('.img_container');
-	}
-	// Elimino l'element que ja he inserit.
-	updateObject(ui.draggable, notInserted);
-}
-
-
-// Pre: obj->objecte mogut, notInserted-> si true no està inserit a la imatge, si false està inserit a la imatge
-// Post: Insereix o actualitza l'objecte que s'ha mogut.
-function updateObject(obj, notInserted){
-
-	var img = $(".img_container");
-	var baseObject;
-	if(notInserted){
-
-		baseObject = init[obj[0].id];
-		baseObject.update(obj, img);
-		baseObject.setMoved(true);
-
-		// Recoperem l'element i el canviem de llista.
-		var toRemove = $("#"+baseObject.getKey()+"-container");
-		// Actualitzem les llistes per poder recoperar els nodes insertats.
-		appendToInserted(baseObject, toRemove);
-		// Eliminem un cop actualitzats
-		toRemove.remove();
-
-	}
-	else{
-		// Actualitzem els objectes que tenim a les llistes. 
-		init[obj[0].id].update(obj, img);
-	}
-
-
-}
 
 // PRE: BaseObject -> objecte que s'ha inserit a la llista. element -> objecte de la llisa que s'ha de moure. 
 // POST: Inserta el nom de element a la llista d'inserits que li pertoca segons BaseObject
@@ -218,6 +333,8 @@ function appendToInserted(baseObject, element){
 	container.append(button);
 	parent.append(container);
 }
+*/
+
 
 // ON CLICK FUNCTIONS **************************************************
 
@@ -261,7 +378,7 @@ function recover(key){
 
 // PRE: --
 // POST: Actualitza tots els elements del map global modified
-function save(){
+/*function save(){
 	// Converts all objects in a json map.
 	var json = JSON.stringify(init);
 	// Makes the ajax petition.
@@ -279,13 +396,13 @@ function save(){
 		},
 	});
 }
-
+*/
 // UTILITIES FUNCTIONS **************************************************
 
 
 // PRE: baseObject conté el tipus de l'element
 // POST: Retorna la llista que li pertoca referent al tipus de baseObject
-function getTheInsertedList(baseObject){
+/*function getTheInsertedList(baseObject){
 
 	var parent;
 	if(baseObject.isType("valve")){
@@ -323,3 +440,4 @@ function getTheParentList(baseObject){
 	}
 	return parent;
 }
+*/

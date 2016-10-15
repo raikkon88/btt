@@ -1,13 +1,7 @@
 
 
 	<div id="{{ object.type }}-{{ object.pk }}" class="obj" 
-		style="width:{{ object.a_width }}px;
-			   height:{{ object.a_height }}px;
-			   background:{{ object.a_color }};
-			   float:left;
-			   -webkit-transform:rotate({{object.a_rotation}}deg);
-			   -ms-transform:rotate({{object.a_rotation}}deg);
-			   transform:rotate({{object.a_rotation}}deg);" align="center"> 
+		style="{% if object.a_moved %}position: absolute;{% else %}position:relative;{% endif %}z-index: 3;left:{{ object.a_x }}px;top:{{object.a_y}}px;bottom:auto;right:auto;width:{{ object.a_width }}px;height:{{ object.a_height }}px;background:{{ object.a_color }};-webkit-transform:rotate({{object.a_rotation}}deg);-ms-transform:rotate({{object.a_rotation}}deg);transform:rotate({{object.a_rotation}}deg);" align="center"> 
 		{% if object.type == 'BooleanObject' %}
 			{% if object.a_value %}
 				<img src="{{ STATIC_URL }}{{ object.a_image_on }}" style="width:{{ object.a_width }}px"/>				

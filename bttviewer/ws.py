@@ -16,9 +16,9 @@ import json
 
 
 def FillObject(json, obj):
-	obj.a_x 			= float(json['x'])
-	obj.a_y 			= float(json['y'])
-	obj.a_moved 		= bool(json['moved'])
+	obj.a_x = float(json['x'])
+	obj.a_y = float(json['y'])
+	obj.a_moved = bool(json['moved'])
 	if obj.a_moved:
 		obj.a_moved = True
 	else:
@@ -58,12 +58,14 @@ def ProcessJsonObjects(request):
 
 	data = request.POST.keys()
 	objects = json.loads(data[0])
+	print objects
 	for obj in objects:
-		if "bool" in obj:
+
+		if "BooleanObject" in obj:
 			UpdateBooleanObjects(objects[obj])
-		elif "sonda" in obj:
+		elif "AnalogObject" in obj:
 			UpdateAnalogObjects(objects[obj])
-		elif "valve" in obj:
+		elif "Valve3WaysObject" in obj:
 			UpdateValveObjects(objects[obj])
 		else:
 			return HttpResponse(status=500)
