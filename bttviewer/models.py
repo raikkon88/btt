@@ -27,7 +27,9 @@ class MiniServer(models.Model):
     ## Mounts the access path to miniserver
     ## Returns path as string
     def getSelectString(self):
-        return "http://" + self.a_user + ":" + self.a_password + "@" + self.a_path
+        return "http://" + self.a_user + ":" + self.a_password + "@" + self.a_path + "/dev/sps/io/"
+
+
 
 ###################################################################################################
 # PLANE OBJECTS
@@ -48,6 +50,10 @@ class Plane(models.Model):
     def getImageName(self):
         print self.a_image
 
+    # Return miniserver path for this plane
+    def getMiniserverSelectPath(self):
+        return self.a_server.getSelectString();
+
 
 ###################################################################################################
 # BASE OBJECTS
@@ -64,7 +70,7 @@ class BaseObject(models.Model):
     # Atributes visible
     a_width = models.FloatField(verbose_name="Width")
     a_height = models.FloatField(verbose_name="Height")
-    a_color = models.CharField(max_length=8, default='#FFFFFF', verbose_name='Color')
+    a_color = models.CharField(max_length=8, default='#00FFFFFF', verbose_name='Color')
     a_rotation = models.IntegerField(verbose_name="Rotation", default=0)
     a_name = models.CharField(max_length=200, default='Element', verbose_name='Name')
     a_query = models.CharField(max_length=150, default='', verbose_name='Path (query to be done into Miniserver)')
@@ -165,7 +171,7 @@ class AnalogObject(BaseObject):
     ## assign number as string into the a_value, if error returns 'Error'
     def makeRequest(self, path):
         result = super(AnalogObject, self).makeRequest(path)
-        self.a_value = result + 'º'
+        self.a_value = result
 
 ###################################################################################################
 # MINISERVER OBJECTS

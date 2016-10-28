@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from pprint import pprint
 from django.core import serializers
 from .models import BooleanObject
@@ -9,6 +9,7 @@ from .models import Valve3WaysObject
 from .models import MiniServer
 from .models import Plane
 import json
+import re
 
 ##############################################################################
 #	UTILITIES
@@ -58,7 +59,6 @@ def ProcessJsonObjects(request):
 
 	data = request.POST.keys()
 	objects = json.loads(data[0])
-	print objects
 	for obj in objects:
 
 		if "BooleanObject" in obj:
@@ -71,3 +71,4 @@ def ProcessJsonObjects(request):
 			return HttpResponse(status=500)
 
 	return HttpResponse(status=201)
+

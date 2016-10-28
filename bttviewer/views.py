@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.template import loader, RequestContext
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -69,6 +69,10 @@ def plane(request, plane_id):
 	valves = Valve3WaysObject.objects.filter(a_plane=plane_obj)
 
 	objects = list(chain(analogs, booleans, valves))
+
+	for obj in objects:
+		obj.makeRequest(plane_obj.getMiniserverSelectPath());
+
 	json_objects = serializers.serialize("json",objects)
 
 	parameters = {
@@ -76,9 +80,29 @@ def plane(request, plane_id):
 		'objects' : objects,
 		'json_objects':json_objects,
 	}
+
 	return CustomRender('bttviewer/plane.html', request, parameters)
 
+@login_required(login_url='/login')
+def reloadQuery(request, object_id):
 
+	key = object_id[object_id.index('-') + 1 :object_id.index('-') + (len(object_id) - object_id.index('-'))]
+	obj = None
+
+	if "BooleanObject" in object_id:
+		obj = BooleanObject.objects.get(pk=key)	
+	elif "AnalogObject" in object_id:
+		obj = AnalogObject.objects.get(pk=key)
+	elif "Valve3WaysObject" in object_id:
+		obj = Valve3WaysObject.objects.get(pk=key)
+	else:
+		 HttpResponse(status=500)
+
+	obj.makeRequest(obj.a_plane.getMiniserverSelectPath())
+	if obj.a_value == None or obj.a_value == '':
+		return HttpResponse(status=500)
+	else:
+		return JsonResponse('{' + str(obj.a_value) + '}', safe=False)
 
 
 @login_required(login_url='/login')

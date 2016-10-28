@@ -19,7 +19,7 @@
 				<img src="{{ STATIC_URL }}{{ object.a_image_ab }}" style="width:{{ object.a_width }}px"/>
 			{% endif %}
 		{% else %}
-		<span class="sonda_value">{{ object.a_value }}</span>
+		<span id="{{ object.type }}-{{ object.pk }}-value" class="sonda_value">{{ object.a_value }}</span>
 		{% endif %}	
 	</div>
 
