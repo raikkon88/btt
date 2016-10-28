@@ -15,16 +15,19 @@
 
 {% block content %}
 
-<h1>Login to Btt</h1>
-
 <form id="login_form" method="post" action="/login/">
     {% csrf_token %}
-    Username: <input type="text" name="username" value="" size="50" />
-    <br />
-    Password: <input type="password" name="password" value="" size="50" />
-    <br />
 
-    <input type="submit" value="submit" />
+    <ul class="login_list">
+	    <li>
+	    	<p>Username:</p> <p><input type="text" name="username" value="" size="50" /></p>
+	    </li>
+	    <li>
+	    	<p>Password:</p> <p> <input type="password" name="password" value="" size="50" /></p>
+		</li>
+		<li>
+    		<p><input class="submit_login" type="submit" value="submit" /></p>
+    	</li>
 </form>
 
 {% endblock %}

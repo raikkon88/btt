@@ -18,15 +18,18 @@
 			<div class="container">
 			{% if MiniServers %}
 				<div class="row">
-					<h1>Servidors configurats : </h1>
+					<h1>Configured Servers : </h1>
 				</div>
 				{% for server in MiniServers %}
 				<div class="row">
 					<div class="col-xs-12">
-						<h3>
-							<!--<a href="/miniserver/{{ server.id }}">{{ server.a_name }} -> {{ server.a_path }}</a>-->
+						<h3 class="home_title">
 							<a href="/miniserver/{{ server.id }}">
-								{{ server.a_name }} -> {{ server.a_path }}
+								BTT page -> {{ server.a_name }} 
+							</a>
+							<!--<a href="/miniserver/{{ server.id }}">{{ server.a_name }} -> {{ server.a_path }}</a>-->
+							<a style="float:right" href="http://{{ server.a_path }}">
+								Loxone page -> {{ server.a_path }} 
 							</a>
 						</h3>
 					</div>

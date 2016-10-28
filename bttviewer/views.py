@@ -160,10 +160,10 @@ def user_logout(request):
 	return HttpResponseRedirect("/login")
 
 def user_no_active(request):
-	return SimpleCustomRender('bttviewer/not_active.html', request)
+	return CustomRender('bttviewer/not_active.html', request, {'notlogged':True})
 
 def user_bad_credentials(request):
-	return SimpleCustomRender('bttviewer/not_user.html', request)
+	return CustomRender('bttviewer/not_user.html', request, {'notlogged':True})
 
 def login_form(request, form , context):
 	return CustomRender('bttviewer/login_form.html', request, {'form':form,'notlogged':True})

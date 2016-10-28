@@ -3,7 +3,7 @@
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#"> BTT </a>
+	      <a class="navbar-brand" href="http://{{ base_url }}/"> BTT </a>
 	    </div>
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
@@ -15,6 +15,14 @@
         		<li><a href="http://{{ server.a_path }}/">Loxone</a></li>
         	</ul>
         	{% endif %}
+			{% if plane %}
+	    	<ul class="nav navbar-nav navbar-left">
+        		<li><a href="http://{{ base_url }}/miniserver/{{ plane.a_server.pk }}/">Planes</a></li>
+        	</ul>
+        	{% endif %}
+        	<ul class="nav navbar-nav navbar-right">
+        		<li><a href="{% url 'admin:index' %}">Admin</a></li>
+        	</ul>
 	    	<ul class="nav navbar-nav navbar-right">
         		<li><a href="http://{{ base_url }}/logout">Log out</a></li>
         	</ul>
