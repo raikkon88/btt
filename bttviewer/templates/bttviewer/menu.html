@@ -10,6 +10,11 @@
 	    {% if notlogged %}
 	    	
 	    {% else %}
+	    	{% if server %}
+	    	<ul class="nav navbar-nav navbar-left">
+        		<li><a href="http://{{ server.a_path }}/">Loxone</a></li>
+        	</ul>
+        	{% endif %}
 	    	<ul class="nav navbar-nav navbar-right">
         		<li><a href="http://{{ base_url }}/logout">Log out</a></li>
         	</ul>

@@ -4,20 +4,21 @@
 		style="{% if object.a_moved %}position: absolute;{% else %}position:relative;{% endif %}z-index: 3;left:{{ object.a_x }}px;top:{{object.a_y}}px;bottom:auto;right:auto;width:{{ object.a_width }}px;height:{{ object.a_height }}px;background:{{ object.a_color }};-webkit-transform:rotate({{object.a_rotation}}deg);-ms-transform:rotate({{object.a_rotation}}deg);transform:rotate({{object.a_rotation}}deg);" align="center"> 
 		{% if object.type == 'BooleanObject' %}
 			{% if object.a_value %}
-				<img src="{{ STATIC_URL }}{{ object.a_image_on }}" style="width:{{ object.a_width }}px"/>				
+				<img id="{{ object.type }}-{{ object.pk }}-image" src="{{ STATIC_URL }}{{ object.a_image_on }}" style="width:{{ object.a_width }}px"/>				
 			{% else %}
-				<img src="{{ STATIC_URL }}{{ object.a_image_off }}" style="width:{{ object.a_width }}px;height:{{ object.a_height }}px;"/>	
+				<img id="{{ object.type }}-{{ object.pk }}-image" src="{{ STATIC_URL }}{{ object.a_image_off }}" style="width:{{ object.a_width }}px;height:{{ object.a_height }}px;"/>	
 			{% endif %}
 		{% elif object.type == 'Valve3WaysObject' %}
 			{% if object.a_as_boolean %}
 				{% if object.a_value == 100 %}
-					<img src="{{ STATIC_URL }}{{ object.a_image_a }}" style="width:{{ object.a_width }}px"/>
+					<img id="{{ object.type }}-{{ object.pk }}-image" src="{{ STATIC_URL }}{{ object.a_image_a }}" style="width:{{ object.a_width }}px"/>
 				{% else %}
-					<img src="{{ STATIC_URL }}{{ object.a_image_b }}" style="width:{{ object.a_width }}px"/>
+					<img id="{{ object.type }}-{{ object.pk }}-image" src="{{ STATIC_URL }}{{ object.a_image_b }}" style="width:{{ object.a_width }}px"/>
 				{% endif %}
 			{% else %}
-				<img src="{{ STATIC_URL }}{{ object.a_image_ab }}" style="width:{{ object.a_width }}px"/>
+				<img id="{{ object.type }}-{{ object.pk }}-image"  src="{{ STATIC_URL }}{{ object.a_image_ab }}" style="width:{{ object.a_width }}px"/>
 			{% endif %}
+			<span id="{{ object.type }}-{{ object.pk }}-value" class="sonda_value">{{ object.a_value }}</span>
 		{% else %}
 		<span id="{{ object.type }}-{{ object.pk }}-value" class="sonda_value">{{ object.a_value }}</span>
 		{% endif %}	

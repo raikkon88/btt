@@ -19,11 +19,14 @@
 {% endblock %}
 
 {% block content %}
+
+	
 	<script> 
 		var list = JSON.parse("{{ json_objects|escapejs }}");
 		var mediaPath = "{{ STATIC_URL }}" + "media";
 		
 	</script>
+	
 
 	<div class="plane-content" style="padding-top : 20px;">
 
@@ -32,25 +35,29 @@
 			<div class="col-xs-10">
 				<h2>Plànol : {{ plane.a_name }}</h2>
 			</div>
+			{% if admin %}
 			<div class="col-xs-2 desar_button_div">
 				<button class="desar_button btn btn-primary" onclick="save()">GUARDAR</button>
 			</div> 
+			{% endif %}
 		</div>	
 
-
+		{% if admin %}
 		<div class="alert alert-danger" role="alert" id="sendNotOk">
 		  Quelcom ha anat malament i no s'han pogut actualitzar els elements, contacta amb l'administrador. Gràcies per el feedback!! 
 		</div>
 		<div class="alert alert-success" role="alert" id="sendOk">
 		  Elements modificats correctament
 		</div>
-
+		
 		<script>
 			$('#sendNotOk').hide();
 			$('#sendOk').hide();
 		</script>
+		{% endif %}
 
 		<div class="row">
+		
 			<div id="items-list" class="col-xs-3">
 				<div class="list-item-header">
 					<div class="col-xs-8">

@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.http import JsonResponse, HttpResponse
 from btt import settings
 import requests
 import sys
@@ -150,6 +151,25 @@ class BooleanObject(BaseObject):
         else: 
             self.a_value = result
 
+    # --
+    # Return image path depending on value
+    def getImageForValue(self):
+        if self.a_value:
+            result = self.a_image_on.url
+        else: 
+            result = self.a_image_off.url
+
+        return result.replace('media/media', 'media')
+
+    def makeJsonRequest(self):
+        result = self.makeRequest(self.a_plane.getMiniserverSelectPath())
+
+        if self.a_value == None or self.a_value == '':
+            return HttpResponse(status=500)
+        else:
+            return JsonResponse('{"value":' + str(self.a_value) + ',"path":"'+ self.getImageForValue() +'"}', safe=False)
+
+
 ###################################################################################################
 # MINISERVER OBJECTS
 # - This class is used to store the configuration for a miniserver
@@ -172,6 +192,15 @@ class AnalogObject(BaseObject):
     def makeRequest(self, path):
         result = super(AnalogObject, self).makeRequest(path)
         self.a_value = result
+
+    def makeJsonRequest(self):
+        result = self.makeRequest(self.a_plane.getMiniserverSelectPath())
+
+        if self.a_value == None or self.a_value == '':
+            return HttpResponse(status=500)
+        else:
+            return JsonResponse('{"value":' + str(self.a_value) + '}', safe=False)
+
 
 ###################################################################################################
 # MINISERVER OBJECTS
@@ -231,3 +260,26 @@ class Valve3WaysObject(BaseObject):
             self.a_value = 0
             print("Valve object conversion error:", sys.exc_info())
 
+
+    # --
+    # Return image path depending on value
+    def getImageForValue(self):
+        result = ''
+        if self.a_value == 0:
+            result = self.a_image_b.url
+        elif self.a_value == 100: 
+            result = self.a_image_a.url
+        else:
+            result = self.a_image_ab.url
+
+        return result.replace('media/media', 'media')
+
+
+
+    def makeJsonRequest(self):
+        result = self.makeRequest(self.a_plane.getMiniserverSelectPath())
+
+        if self.a_value == None or self.a_value == '':
+            return HttpResponse(status=500)
+        else:
+            return JsonResponse('{"value":' + str(self.a_value) + ',"path":"'+ self.getImageForValue() +'"}', safe=False)

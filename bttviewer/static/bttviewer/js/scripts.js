@@ -116,25 +116,57 @@ function reloadAllValues(init, list){
 	
 	for(var o in init){
 		console.log(init[o]);
-		console.log(o);
 		var element = document.getElementById(o);
+		var string = o+"-value";
+		var element = document.getElementById(string);
+		var string = o+"-image";
+		var image = document.getElementById(string);
 		console.log(element);
-		doReloadAjax('http://localhost:8000/reload/'+ o + "/", element);
+		doReloadAjax('http://localhost:8000/reload/'+ o + "/", element, image);
 	}
 	reloadInfiniteLoop(init, list);
 }
 
-function doReloadAjax(path, element){
+function doReloadAjax(path, element, image){
 
 	$.ajax({
     	url: path,
     	type: "POST",
     	success: function (response) {
+
+    		var jsonResponse = JSON.parse(response);
+
     		console.log(response);
-    		element.text = response;
+    		if(path.includes("AnalogObject")){
+    			if(element != null)
+    				element.innerHTML = jsonResponse.value;
+    		}
+    		else{
+    			if(image != null)
+					image.src = "http://localhost:8000" + jsonResponse.path;
+    			if(path.includes("Valve3WaysObject")){
+    				if(element != null)
+    					element.innerHTML = jsonResponse.value;
+    			// Ha de tornar la imatge que li pertoca.
+	    		}	
+    		}
+    		
+    		
+ 			
     	},   
 		error: function (response){
-			element.style.background = "red";
+
+			var parent = null;
+			if (element != null) {
+				parent = element.parentElement;
+				parent.style.background = "red";
+			}
+			if(image != null){
+				parent = image.parentElement;
+				parent.style.background = "red";
+			}
+
+			
 		},
 	});
 }

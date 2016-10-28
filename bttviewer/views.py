@@ -53,8 +53,10 @@ def home(request):
 
 @login_required(login_url='/login')
 def miniserver(request, miniserver_id):
+	miniserver = MiniServer.objects.get(pk=miniserver_id)
 	plane_objects = Plane.objects.filter(a_server_id=miniserver_id)
 	parameters = {
+		'server' : miniserver,
 		'PlaneObjects' : plane_objects
 	}
 	#return HttpResponse(template.render(context, request))
@@ -62,6 +64,7 @@ def miniserver(request, miniserver_id):
 
 @login_required(login_url='/login')
 def plane(request, plane_id):
+
 	plane_obj = Plane.objects.get(pk=plane_id)
 	
 	analogs = AnalogObject.objects.filter(a_plane=plane_obj)
@@ -76,12 +79,24 @@ def plane(request, plane_id):
 	json_objects = serializers.serialize("json",objects)
 
 	parameters = {
+		'server' : plane_obj.a_server,
 		'plane' : plane_obj,
 		'objects' : objects,
 		'json_objects':json_objects,
 	}
 
+	if request.user.is_staff:
+		return planeAdmin(request, plane_id, parameters)
+	else: 
+		return planeGuest(request, plane_id, parameters)
+
+def planeAdmin(request, plane_id, parameters):
+	parameters["admin"] = True
 	return CustomRender('bttviewer/plane.html', request, parameters)
+
+def planeGuest(request, plane_id, parameters):
+	return CustomRender('bttviewer/plane.html', request, parameters)
+
 
 @login_required(login_url='/login')
 def reloadQuery(request, object_id):
@@ -91,18 +106,17 @@ def reloadQuery(request, object_id):
 
 	if "BooleanObject" in object_id:
 		obj = BooleanObject.objects.get(pk=key)	
+
 	elif "AnalogObject" in object_id:
 		obj = AnalogObject.objects.get(pk=key)
+		
 	elif "Valve3WaysObject" in object_id:
 		obj = Valve3WaysObject.objects.get(pk=key)
+
 	else:
 		 HttpResponse(status=500)
 
-	obj.makeRequest(obj.a_plane.getMiniserverSelectPath())
-	if obj.a_value == None or obj.a_value == '':
-		return HttpResponse(status=500)
-	else:
-		return JsonResponse('{' + str(obj.a_value) + '}', safe=False)
+	return obj.makeJsonRequest();
 
 
 @login_required(login_url='/login')
