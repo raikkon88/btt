@@ -16,7 +16,7 @@ Getting bit bucket repository
 
 Going inside project folder and executing the init file. 
 
-	cd bttenginyers/  
+	cd btt/  
 	sudo chmod u+x startinit.bash
 	./startinit.bash	
 
@@ -33,8 +33,8 @@ If you have stopped pi and you want to start it only do the next steps :
 1 - Open a terminal 
 2 - Tip the next commands in that order
 
-    cd ~/bttenginyers/
-    cd bttenginyersenv/
+    cd ~/btt/
+    cd bttenv/
     source bin/activate
     cd ..
     python manage.py runserver 0.0.0.0:8000
