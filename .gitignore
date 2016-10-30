@@ -21,3 +21,4 @@ media
 migrations
 *.sqlite3
 bttviewer/migrations
+static

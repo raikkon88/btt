@@ -26,7 +26,7 @@ import sys
 
 def CustomRender(file, request, parameters):
 	parameters['base_url'] = request.META['HTTP_HOST']
-	parameters['STATIC_URL'] = 'http://' + request.META['HTTP_HOST'] + settings.STATIC_URL + "/bttviewer/"
+	parameters['STATIC_URL'] = 'http://' + request.META['HTTP_HOST'] + settings.STATIC_URL + "bttviewer/"
 	return render(
 		request,
 		file,
