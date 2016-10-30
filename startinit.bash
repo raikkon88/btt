@@ -18,7 +18,9 @@ pip install requests
 pip install Pillow
 echo "- MIGRATING DATABASE"
 # Generem la base de dades i migrem 
-sudo python manage.py migrate
+sudo python manage.py makemigrations bttviewer
+sudo python manage.py migrate 
+sudo python manage.py migrate bttviewer
 
 echo "--> CREATING VIRTUAL ENVIRONMENT AND SETTING UP PROJECT <--"
 # Generem entorn virtual i l'activem
