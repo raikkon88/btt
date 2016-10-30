@@ -24,12 +24,9 @@ sudo python manage.py makemigrations
 echo "--> CREATING VIRTUAL ENVIRONMENT AND SETTING UP PROJECT <--"
 # Generem entorn virtual i l'activem
 sudo pip install virtualenv
-sudo virtualenv bttenginyersenv
-sudo source bttenginyersenv/bin/activate
+sudo virtualenv bttenv
+sudo source bttenv/bin/activate
 
-echo "- COLLECTING STATIC FILES"
-# Recollim tots els recursos
-#sudo python manage.py collectstatic --noinput
 # desactivem l'entorn virtual
 echo "--> SETTING UP THE APPLICATION <--"
 # Encenem l'aplicació per el port 8000
@@ -37,16 +34,19 @@ echo "--> SETTING UP THE APPLICATION <--"
 sudo cp ~/btt/btt.conf /etc/apache2/sites-enabled/btt.conf
 sudo rm -r ~/btt/btt.conf
 
-sudo chown :www-data ~/btt/*
+sudo chown -R :www-data ~/btt/*
 sudo chmod 664 ~/btt/db.sqlite3
 sudo chmod 664 ~/btt/db.sqlite3
 sudo chown :www-data ~/btt/db.sqlite3
-sudo chown :www-data ~/btt
 sudo service apache2 restart
 
 echo "- CREATING SUPER USER"
 # Creem l'usuari. 
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('btt', 'btt@btt.com', 'bttenginyers')" | sudo python manage.py shell
+
+echo "- COLLECTING STATIC FILES"
+# Recollim tots els recursos
+sudo python manage.py collectstatic --noinput
 
 exit
 
