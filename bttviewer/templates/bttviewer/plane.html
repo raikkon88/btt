@@ -23,7 +23,7 @@
 	
 	<script> 
 		var list = JSON.parse("{{ json_objects|escapejs }}");
-		var mediaPath = "{{ STATIC_ROOT }}" + "media";
+		var mediaPath = "{{ STATIC_URL }}" + "media";
 		
 	</script>
 	
@@ -96,7 +96,7 @@
 								{% endif %}
 						{% endfor %}
 					{% endif %}
-					<img class="" src="{{ STATIC_ROOT }}{{ plane.a_image }}" style="width:100%;position:relative; z-index:0;"/>
+					<img class="" src="{{ STATIC_URL }}{{ plane.a_image }}" style="width:100%;position:relative; z-index:0;"/>
 					
 				</div>
 			</div>
