@@ -34,10 +34,9 @@ echo "--> SETTING UP THE APPLICATION <--"
 sudo cp ~/btt/btt.conf /etc/apache2/sites-enabled/btt.conf
 sudo rm -r ~/btt/btt.conf
 
-sudo chown -R :www-data ~/btt/*
+sudo chown -R www-data ~/btt/
+sudo chgrp -R www-data ~/btt/
 sudo chmod 664 ~/btt/db.sqlite3
-sudo chmod 664 ~/btt/db.sqlite3
-sudo chown :www-data ~/btt/db.sqlite3
 sudo service apache2 restart
 
 echo "- CREATING SUPER USER"
@@ -47,6 +46,7 @@ echo "from django.contrib.auth.models import User; User.objects.create_superuser
 echo "- COLLECTING STATIC FILES"
 # Recollim tots els recursos
 sudo python manage.py collectstatic --noinput
+sudo chown -R www-data ~/btt/static
 
 exit
 
