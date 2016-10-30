@@ -122,3 +122,4 @@ USE_TZ = True
 MEDIA_ROOT = os.path.join(BASE_DIR, 'bttviewer/static')
 STATIC_URL = '/static/'
 MEDIA_URL = '/static/media/'
+STATIC_ROOT = '~/btt/bttviewer/static/'
