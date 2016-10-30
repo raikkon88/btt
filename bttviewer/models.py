@@ -71,7 +71,7 @@ class BaseObject(models.Model):
     # Atributes visible
     a_width = models.FloatField(verbose_name="Width")
     a_height = models.FloatField(verbose_name="Height")
-    a_color = models.CharField(max_length=8, default='#00FFFFFF', verbose_name='Color')
+    a_color = models.CharField(max_length=9, default='#00FFFFFF', verbose_name='Color')
     a_rotation = models.IntegerField(verbose_name="Rotation", default=0)
     a_name = models.CharField(max_length=200, default='Element', verbose_name='Name')
     a_query = models.CharField(max_length=150, default='', verbose_name='Path (query to be done into Miniserver)')
