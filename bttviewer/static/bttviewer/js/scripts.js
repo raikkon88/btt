@@ -122,7 +122,7 @@ function reloadAllValues(init, list){
 		var string = o+"-image";
 		var image = document.getElementById(string);
 		console.log(element);
-		doReloadAjax('http://localhost:8000/reload/'+ o + "/", element, image);
+		doReloadAjax('http://localhost/reload/'+ o + "/", element, image);
 	}
 	reloadInfiniteLoop(init, list);
 }
@@ -143,7 +143,7 @@ function doReloadAjax(path, element, image){
     		}
     		else{
     			if(image != null)
-					image.src = "http://localhost:8000" + jsonResponse.path;
+					image.src = "http://localhost" + jsonResponse.path;
     			if(path.includes("Valve3WaysObject")){
     				if(element != null)
     					element.innerHTML = jsonResponse.value;
@@ -271,7 +271,7 @@ function save(){
 	var json = JSON.stringify(init);
 	// Makes the ajax petition.
 	$.ajax({
-    	url: 'http://localhost:8000/ws/processobjects/',
+    	url: 'http://localhost/ws/processobjects/',
     	type: "POST",
     	data: json,
     	success: function (response) {

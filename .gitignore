@@ -22,3 +22,4 @@ migrations
 *.sqlite3
 bttviewer/migrations
 static
+bttenv/
