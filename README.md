@@ -22,7 +22,7 @@ Getting into the user directory.
 
 Getting bit bucket repository
 
-	git clone https://raikkon88@bitbucket.org/raikkon88/btt.git
+	git clone https://bttenginyeria@bitbucket.org/raikkon88/btt.git
 
 **This action has generated our development project 'bttenginyers' into the raspberry pi home.**
 
