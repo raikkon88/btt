@@ -50,24 +50,6 @@ Now the server is on and you can access to admin control of this side in the nex
 
 Remember to change server_ip to the real server ip. And perform the mentioned actions with the users. 
 
-## How to start or stop pi server. 
-
-If you have stopped pi and you want to start it only do the next steps : 
-
-1 - Open a terminal 
-2 - Tip the next commands in that order
-
-    cd ~/btt/
-    cd bttenv/
-    source bin/activate
-    cd ..
-    python manage.py runserver 0.0.0.0:8000
-
-3 -  Now you can access to http://<ip>:8000 and see the result. 
-
-## Connect to the raspberry once installed from ssh
-
-To connect to raspberry using ssh protocol please follow the next steps. 
 
 ###From Windows : 
 
