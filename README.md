@@ -12,6 +12,18 @@ Ometre el pas de descarregar-se el Win32DiskImager si ja el tens instal·lat.
 
 [Manual d'instal·lació Windows](https://www.raspberrypi.org/documentation/installation/installing-images/windows.
 
+3 . Configurar teclat 
+
+obrir la raspberry i entrar a : 
+
+INICI (representat amb una strawberry o frambuesa) -> Preferences -> Mouse and Keyboard. 
+
+Un cop dins Seleccionar pestanya keyboard i apretar el botó "Keyboard Layout". 
+
+A la pantalla que apareix seleccionar spain al country i després a la variant el Catalan (Spain, with middle dot). 
+
+Es pot provar si s'ha escollit la adequada amb el requadre que diu "Type here to test your keyboard". 
+
 ## Automatic Installation
 
 This package is prepared to be installed into a Raspberry executing the next commands 
