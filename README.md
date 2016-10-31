@@ -8,7 +8,9 @@
 
 2 . Seguir el manual que hi ha a l'enllaç següent
 
-[Manual d'instal·lació Windows](https://www.raspberrypi.org/documentation/installation/installing-images/windows.md)
+Ometre el pas de descarregar-se el Win32DiskImager si ja el tens instal·lat. 
+
+[Manual d'instal·lació Windows](https://www.raspberrypi.org/documentation/installation/installing-images/windows.
 
 ## Automatic Installation
 
