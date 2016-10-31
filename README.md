@@ -1,5 +1,15 @@
 # README file for bttEnginyers
 
+## Set up raspberry :
+
+1 . Accedir a la següent web i descarregar-se Raspbian Jessie with PIXEL
+
+(Pàgina de raspberry)[https://www.raspberrypi.org/downloads/raspbian/]
+
+2 . Seguir el manual que hi ha a l'enllaç següent
+
+(Manual d'instal·lació Windows)[https://www.raspberrypi.org/documentation/installation/installing-images/windows.md]
+
 ## Automatic Installation
 
 This package is prepared to be installed into a Raspberry executing the next commands 
