@@ -10,7 +10,7 @@
 
 Ometre el pas de descarregar-se el Win32DiskImager si ja el tens instal·lat. 
 
-[Manual d'instal·lació Windows](https://www.raspberrypi.org/documentation/installation/installing-images/windows.
+<a href="https://www.raspberrypi.org/documentation/installation/installing-images/windows.">Manual d'instal·lació Windows</a>
 
 3 . Configurar teclat 
 
