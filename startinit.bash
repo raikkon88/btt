@@ -40,7 +40,7 @@ sudo service apache2 restart
 
 echo "- CREATING SUPER USER"
 # Creem l'usuari. 
-echo "from django.contrib.auth.models import User; User.objects.create_superuser('btt', 'btt@btt.com', 'bttenginyers')" | sudo python manage.py shell
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('btt', 'btt@btt.com', 'bttenginyeria')" | sudo python manage.py shell
 
 echo "- COLLECTING STATIC FILES"
 # Recollim tots els recursos
