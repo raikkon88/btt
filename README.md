@@ -1,5 +1,29 @@
 # README file for bttEnginyers
 
+## Set up raspberry :
+
+1 . Accedir a la següent web i descarregar-se Raspbian Jessie with PIXEL
+
+[Pàgina de raspberry](https://www.raspberrypi.org/downloads/raspbian/)
+
+2 . Seguir el manual que hi ha a l'enllaç següent
+
+Ometre el pas de descarregar-se el Win32DiskImager si ja el tens instal·lat. 
+
+[Manual d'instal·lació Windows](https://www.raspberrypi.org/documentation/installation/installing-images/windows)
+
+3 . Configurar teclat 
+
+obrir la raspberry i entrar a : 
+
+INICI (representat amb una strawberry o frambuesa) -> Preferences -> Mouse and Keyboard. 
+
+Un cop dins Seleccionar pestanya keyboard i apretar el botó "Keyboard Layout". 
+
+A la pantalla que apareix seleccionar spain al country i després a la variant el Catalan (Spain, with middle dot). 
+
+Es pot provar si s'ha escollit la adequada amb el requadre que diu "Type here to test your keyboard". 
+
 ## Automatic Installation
 
 This package is prepared to be installed into a Raspberry executing the next commands 
@@ -10,7 +34,7 @@ Getting into the user directory.
 
 Getting bit bucket repository
 
-	git clone https://raikkon88@bitbucket.org/raikkon88/btt.git
+	git clone https://bttenginyeria@bitbucket.org/raikkon88/btt.git
 
 **This action has generated our development project 'bttenginyers' into the raspberry pi home.**
 
@@ -26,24 +50,6 @@ Now the server is on and you can access to admin control of this side in the nex
 
 Remember to change server_ip to the real server ip. And perform the mentioned actions with the users. 
 
-## How to start or stop pi server. 
-
-If you have stopped pi and you want to start it only do the next steps : 
-
-1 - Open a terminal 
-2 - Tip the next commands in that order
-
-    cd ~/btt/
-    cd bttenv/
-    source bin/activate
-    cd ..
-    python manage.py runserver 0.0.0.0:8000
-
-3 -  Now you can access to http://<ip>:8000 and see the result. 
-
-## Connect to the raspberry once installed from ssh
-
-To connect to raspberry using ssh protocol please follow the next steps. 
 
 ###From Windows : 
 
