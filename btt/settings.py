@@ -25,7 +25,7 @@ SECRET_KEY = '66p9mwr-o&-rugk%3a_^q=%!4)-3l56z4v4hiu@sw2tlld9v7&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['btt.local']
+ALLOWED_HOSTS = []
 
 
 # Application definition

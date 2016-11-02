@@ -32,10 +32,7 @@ sudo source bttenv/bin/activate
 echo "--> SETTING UP THE APPLICATION <--"
 # Encenem l'aplicació per el port 8000
 sudo mv ~/btt/btt.conf /etc/apache2/sites-available/btt.conf
-
 sudo a2ensite btt.conf
-sudo echo "127.0.0.1	btt.local" >> /etc/hosts
-
 sudo chown -R www-data ~/btt/
 sudo chgrp -R www-data ~/btt/
 sudo chmod 664 ~/btt/db.sqlite3
