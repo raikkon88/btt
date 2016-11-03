@@ -12,5 +12,4 @@ urlpatterns = [
     url(r'^plane/(?P<plane_id>[0-9]+)/reload/(?P<object_id>[\w-]+)/$', views.reloadQuery, name='reloadQuery'),
     url(r'^result/(?P<object_id>[0-9]+)/$', views.request_value, name='request_value'),
     url(r'^ws/processobjects/', ws.ProcessJsonObjects, name='ProcessJsonObjects'),
-
 ]
