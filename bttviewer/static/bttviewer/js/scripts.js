@@ -122,7 +122,7 @@ function reloadAllValues(init, list){
 		var string = o+"-image";
 		var image = document.getElementById(string);
 		console.log(element);
-		doReloadAjax('http://localhost/reload/'+ o + "/", element, image);
+		doReloadAjax('reload/'+ o + "/", element, image);
 	}
 	reloadInfiniteLoop(init, list);
 }
@@ -271,7 +271,7 @@ function save(){
 	var json = JSON.stringify(init);
 	// Makes the ajax petition.
 	$.ajax({
-    	url: 'http://localhost/ws/processobjects/',
+    	url: '/ws/processobjects/',
     	type: "POST",
     	data: json,
     	success: function (response) {
