@@ -99,7 +99,7 @@ def planeGuest(request, plane_id, parameters):
 
 
 @login_required(login_url='/login')
-def reloadQuery(request, object_id):
+def reloadQuery(request, plane_id, object_id):
 
 	key = object_id[object_id.index('-') + 1 :object_id.index('-') + (len(object_id) - object_id.index('-'))]
 	obj = None
@@ -120,7 +120,7 @@ def reloadQuery(request, object_id):
 
 
 @login_required(login_url='/login')
-def request_value(request, plane_id, object_id):
+def request_value(request, object_id):
 	baseObj = BaseObject.objects.get(pk=object_id)
 	return 25
 
