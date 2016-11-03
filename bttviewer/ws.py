@@ -55,7 +55,7 @@ def UpdateAnalogObjects(json):
 #	WEB SERVICE JSON GETTER
 ##############################################################################
 
-def ProcessJsonObjects(request):
+def ProcessJsonObjects(request, plane_id):
 
 	data = request.POST.keys()
 	objects = json.loads(data[0])
