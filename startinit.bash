@@ -31,6 +31,7 @@ sudo source bttenv/bin/activate
 # desactivem l'entorn virtual
 echo "--> SETTING UP THE APPLICATION <--"
 # Encenem l'aplicació per el port 8000
+sudo rm -r /etc/apache2/sites-enabled/000-default.conf
 sudo mv ~/btt/btt.conf /etc/apache2/sites-available/btt.conf
 sudo a2ensite btt.conf
 sudo chown -R www-data ~/btt/
