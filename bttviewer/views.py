@@ -120,7 +120,7 @@ def reloadQuery(request, object_id):
 
 
 @login_required(login_url='/login')
-def request_value(request, object_id):
+def request_value(request, plane_id, object_id):
 	baseObj = BaseObject.objects.get(pk=object_id)
 	return 25
 
