@@ -142,8 +142,10 @@ function doReloadAjax(path, element, image){
     				element.innerHTML = jsonResponse.value;
     		}
     		else{
-    			if(image != null)
-					image.src = "http://localhost" + jsonResponse.path;
+    			if(image != null){
+    				var pathResponse = jsonResponse.path.replace("static", "static/bttviewer");
+					image.src = pathResponse;
+    			}
     			if(path.includes("Valve3WaysObject")){
     				if(element != null)
     					element.innerHTML = jsonResponse.value;

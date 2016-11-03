@@ -167,7 +167,7 @@ class BooleanObject(BaseObject):
         if self.a_value == None or self.a_value == '':
             return HttpResponse(status=500)
         else:
-            return JsonResponse('{"value":' + str(self.a_value) + ',"path":"'+ self.getImageForValue() +'"}', safe=False)
+            return JsonResponse('{"value":' + str(self.a_value).lower() + ',"path":"'+ self.getImageForValue() +'"}', safe=False)
 
 
 ###################################################################################################
@@ -282,4 +282,4 @@ class Valve3WaysObject(BaseObject):
         if self.a_value == None or self.a_value == '':
             return HttpResponse(status=500)
         else:
-            return JsonResponse('{"value":' + str(self.a_value) + ',"path":"'+ self.getImageForValue() +'"}', safe=False)
+            return JsonResponse('{"value":' + str(self.a_value).lower() + ',"path":"'+ self.getImageForValue() +'"}', safe=False)
