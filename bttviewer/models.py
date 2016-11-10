@@ -16,7 +16,7 @@ import re
 class MiniServer(models.Model):
 
     a_name = models.CharField(max_length=100, default='', verbose_name='Nom')
-    a_path = models.CharField(max_length=100, default='', verbose_name='Url del miniserver') 
+    a_path = models.CharField(max_length=100, default='', verbose_name='Ip i port del miniserver') 
     a_user = models.CharField(max_length=50, default='', verbose_name='Usuari administrador')
     a_password = models.CharField(max_length=50, default='', verbose_name='Password per usuari')
 
@@ -200,30 +200,6 @@ class AnalogObject(BaseObject):
             return HttpResponse(status=500)
         else:
             return JsonResponse('{"value":' + str(self.a_value) + '}', safe=False)
-
-
-###################################################################################################
-# MINISERVER OBJECTS
-# - This class is used to store the configuration for a miniserver
-###################################################################################################
-#class AnalogFlagObject(BaseObject):
-
-    #a_value = models.FloatField(editable=False, null=True)
-    #a_image = models.ImageField(upload_to='images', default="", verbose_name='Image FLAG')    
-    # OVERRIDING 
-    #BaseObject._meta.get_field('a_width').verbose_name = "Width (Minim: 60px)"
-    #BaseObject._meta.get_field('a_height').verbose_name = "Height (Minim: 25px)"
-
-    ## Text seen in django admin
-    ## Return a string 
-    #def __unicode__(self):
-        #return 'Consigna: ' + self.a_name
-
-    ## Particular logic for flag requests
-    ## assign number as string into the a_value, if error returns 'Error'
-    #def makeRequest(self, path):
-        #result = super(AnalogFlagObject, self).makeRequest(path)
-        #self.a_value = result + 'º'
 
 ###################################################################################################
 # MINISERVER OBJECTS
