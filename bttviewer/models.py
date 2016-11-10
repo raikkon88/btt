@@ -178,8 +178,8 @@ class AnalogObject(BaseObject):
 
     a_value = models.FloatField(editable=False, null=True)
     a_isFlag = models.BooleanField(editable=False, default=False) # is or not a flag.
-    BaseObject._meta.get_field('a_width').verbose_name = "Width (Minim: 60px)"
-    BaseObject._meta.get_field('a_height').verbose_name = "Height (Minim: 25px)"
+    BaseObject._meta.get_field('a_width').verbose_name = "Width (Minim: 30px)"
+    BaseObject._meta.get_field('a_height').verbose_name = "Height (Minim: 30px)"
     
 
     ## Text seen in django admin
