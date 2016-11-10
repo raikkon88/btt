@@ -21,4 +21,3 @@ migrations
 *.sqlite3
 bttviewer/migrations
 bttenv/
-btt.conf
