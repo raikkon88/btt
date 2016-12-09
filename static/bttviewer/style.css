@@ -1,0 +1,82 @@
+
+.parent{
+	height: 500px;
+}
+
+.img_container{
+	background-color: rgb(239,238,236);
+	height:auto;
+	position: relative;
+	border:5px solid rgb(213,213,213);
+}
+
+.home_title{
+	padding: 10px;
+	margin-top:20px;
+	border: 1px solid rgb(213,213,213);
+}
+
+.login_list{
+	width: 45%;
+	list-style: none;
+	margin-top: 40px;
+}
+
+.submit_login{
+	margin:auto;
+	width: 20%;
+
+}
+
+.list{
+	background-color: rgb(239,238,236);
+	height: auto;
+	list-style-type: none;
+	padding-bottom: 10px;
+}
+
+#not_style{
+	list-style: none;
+}
+
+.list-item-header{
+	min-height: 30px;
+	margin-bottom: 30px;
+	border: 3px solid #D5D5D5;
+
+}
+
+.list-item{
+	width:100%;
+}
+
+.objecte{
+	background-color: rgb(239,194,17);
+}
+
+.item{
+	padding-bottom: 35px;
+	text-align: center;
+}
+
+.value_row{
+	padding: 5px;
+}
+
+.consigna_value{
+
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.desar_button{
+	height: 30px;
+	float: right;
+}
+
+.object-name{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+  	overflow: hidden;
+  	
+}
