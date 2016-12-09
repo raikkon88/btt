@@ -1,8 +1,6 @@
 // MODEL BASE OBJECT 
 class BaseObject {
 
-	// PRE : ui fa referència al objecte mogut, img és la imatge on s'ha mogut.
-	// POST : Construeix un objecte del tipus BaseObject
 	constructor(){
 		
 	}
@@ -21,6 +19,8 @@ class BaseObject {
 		this.rotation = json.fields.a_rotation;
 	}
 
+	// PRE : ui fa referència al objecte mogut, img és la imatge on s'ha mogut.
+	// POST : Construeix un objecte del tipus BaseObject
 	setElement(ui, img){
 		this.name = ui[0].parentNode.getElementsByClassName('object-name')[0].textContent.trim();
 		this.key = this.getTheType(ui, false);
@@ -38,6 +38,15 @@ class BaseObject {
 	update(obj, img){
 		this.x = obj.offset().left - img.offset().left - 4;
 		this.y = obj.offset().top - img.offset().top - 4;
+	}
+
+	// PRE: obj -> objecte que s'ha mogut, img -> imatge per on s'ha mogut
+	// POST: Actualitza la posició de l'objecte relatiu a la imatge que se li passa.
+	update(obj, img, maxWidth, maxHeight, imageWidth, imageHeight){
+		var x = obj.offset().left - img.offset().left - 4;
+		var y = obj.offset().top - img.offset().top - 4;
+		this.x = (x * maxWidth) / imageWidth;
+		this.y = (y * maxHeight) / imageHeight;
 	}
 
 	// PRE : --
