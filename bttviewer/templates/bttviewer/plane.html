@@ -22,6 +22,35 @@
 
 	
 	<script> 
+
+
+		function updateSize(){
+
+			$( ".obj" ).each(function() {
+				//console.log($(this));
+				var initObj = init[$(this).attr('id')];
+
+				var sizeW = ($("#plane_image_id").width() * initObj.img_width) / maxWSize;
+				var sizeH = ($("#plane_image_id").height() * initObj.img_height) / maxHSize;
+
+				$(this).css({width:sizeW});	
+				$(this).children().css({width:sizeW});
+				$(this).css({height:sizeH});
+				$(this).children().css({height:sizeH});
+
+				// EL moguem al lloc que toca. 
+				var positionX = ($("#plane_image_id").width() * initObj.x) / maxWSize;
+				var positionY = ($("#plane_image_id").height() * initObj.y) / maxHSize;
+
+				$(this).css({left:positionX});
+				$(this).css({top:positionY});
+
+				//console.log("position X :" + positionX);
+				//console.log("position Y :" + positionY);
+
+			});
+		}
+
 		var list = JSON.parse("{{ json_objects|escapejs }}");
 		var mediaPath = "{{ STATIC_URL }}" + "media";
 		
@@ -101,7 +130,7 @@
 								{% endif %}
 						{% endfor %}
 					{% endif %}
-					<img id="plane_image_id" class="" src="{{ STATIC_URL }}{{ plane.a_image }}" style="width:100%;position:relative; z-index:0;"/>
+					<img id="plane_image_id" class="" src="{{ STATIC_URL }}{{ plane.a_image }}" style="width:100%;position:relative; z-index:0;" onload="updateSize()"/>
 					
 				</div>
 			</div>
@@ -110,40 +139,6 @@
 		<script type="text/javascript">
 
 			insertListToMap(init, list, mediaPath);
-
-			$( ".obj" ).each(function() {
-
-				//console.log($(this));
-				var initObj = init[$(this).attr('id')];
-
-				console.log(initObj.img_height);
-				console.log(maxHSize);
-				console.log($("#plane_image_id"));
-				console.log($("#plane_image_id").height());
-				
-				var img = document.getElementById('plane_image_id');
-				console.log(img.clientHeight);
-
-
-				var sizeW = ($("#plane_image_id").width() * initObj.img_width) / maxWSize;
-				var sizeH = ($("#plane_image_id").height() * initObj.img_height) / maxHSize;
-
-				$(this).css({width:sizeW});	
-				$(this).children().css({width:sizeW});
-				$(this).css({height:sizeH});
-				$(this).children().css({height:sizeH});
-
-				// EL moguem al lloc que toca. 
-				var positionX = ($("#plane_image_id").width() * initObj.x) / maxWSize;
-				var positionY = ($("#plane_image_id").height() * initObj.y) / maxHSize;
-
-				$(this).css({left:positionX});
-				$(this).css({top:positionY});
-
-				//console.log("position X :" + positionX);
-				//console.log("position Y :" + positionY);
-
-			});
 
 			window.onresize = function(){
 				$( ".obj" ).each(function() {

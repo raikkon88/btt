@@ -287,30 +287,3 @@ function save(){
 		},
 	});
 }
-
-function updateSize(){
-
-	$( ".obj" ).each(function() {
-		//console.log($(this));
-		var initObj = init[$(this).attr('id')];
-
-		var sizeW = ($("#plane_image_id").width() * initObj.img_width) / maxWSize;
-		var sizeH = ($("#plane_image_id").height() * initObj.img_height) / maxHSize;
-
-		$(this).css({width:sizeW});	
-		$(this).children().css({width:sizeW});
-		$(this).css({height:sizeH});
-		$(this).children().css({height:sizeH});
-
-		// EL moguem al lloc que toca. 
-		var positionX = ($("#plane_image_id").width() * initObj.x) / maxWSize;
-		var positionY = ($("#plane_image_id").height() * initObj.y) / maxHSize;
-
-		$(this).css({left:positionX});
-		$(this).css({top:positionY});
-
-		//console.log("position X :" + positionX);
-		//console.log("position Y :" + positionY);
-
-	});
-}
