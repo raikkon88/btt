@@ -113,12 +113,12 @@
 
 			$( ".obj" ).each(function() {
 
+				//console.log($(this));
+				var initObj = init[$(this).attr('id')];
+
 				console.log(initObj.img_height);
 				console.log(maxHSize);
 				console.log($("#plane_image_id").height());
-
-				//console.log($(this));
-				var initObj = init[$(this).attr('id')];
 
 				var sizeW = ($("#plane_image_id").width() * initObj.img_width) / maxWSize;
 				var sizeH = ($("#plane_image_id").height() * initObj.img_height) / maxHSize;
