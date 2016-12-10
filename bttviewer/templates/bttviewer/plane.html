@@ -112,6 +112,11 @@
 			insertListToMap(init, list, mediaPath);
 
 			$( ".obj" ).each(function() {
+
+				console.log(initObj.img_height);
+				console.log(maxHSize);
+				console.log($("#plane_image_id").height());
+
 				//console.log($(this));
 				var initObj = init[$(this).attr('id')];
 
