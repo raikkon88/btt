@@ -268,11 +268,7 @@ function updateObject(obj, inserted){
 
 // PRE: --
 // POST: Actualitza tots els elements del map global modified
-function save(){
-	// Puts all positions in a standard width and height
-	
-	console.log(init);
-	
+function save(){	
 	// Converts all objects in a json map.
 	var json = JSON.stringify(init);
 	// Makes the ajax petition.
@@ -286,8 +282,6 @@ function save(){
     	},   
 		error: function (response){
 
-			console.log(response);
-
 			// Ensenyem un popup conforme no s'ha pogut enviar la petició.
 			$('#sendNotOk').show().delay(5000).fadeOut();
 		},
@@ -295,7 +289,7 @@ function save(){
 }
 
 function updateSize(){
-	
+
 	$( ".obj" ).each(function() {
 		//console.log($(this));
 		var initObj = init[$(this).attr('id')];
