@@ -125,7 +125,7 @@ function reloadAllValues(init, list){
 		//console.log(element);
 		doReloadAjax('reload/'+ o + "/", element, image);
 	}
-	reloadInfiniteLoop(init, list);
+	//reloadInfiniteLoop(init, list);
 }
 
 function doReloadAjax(path, element, image){
@@ -252,7 +252,7 @@ function updateObject(obj, inserted){
 	if(!inserted){
 
 		baseObject = init[obj[0].id];
-		baseObject.update(obj, img);
+		baseObject.update(obj, img,maxWSize,maxHSize,$("#plane_image_id").width(), $("#plane_image_id").height());
 		baseObject.setMoved(true);
 
 		// Eliminem l'element de la llista
@@ -263,8 +263,7 @@ function updateObject(obj, inserted){
 		// Actualitzem els objectes que tenim a les llistes. 
 		init[obj[0].id].update(obj, img, maxWSize, maxHSize, $("#plane_image_id").width(), $("#plane_image_id").height());
 	}
-
-
+	
 }
 
 // PRE: --
@@ -272,7 +271,7 @@ function updateObject(obj, inserted){
 function save(){
 	// Puts all positions in a standard width and height
 	
-	console.log(init)
+	console.log(init);
 	
 	// Converts all objects in a json map.
 	var json = JSON.stringify(init);
@@ -286,6 +285,9 @@ function save(){
     		$('#sendOk').show().delay(5000).fadeOut();
     	},   
 		error: function (response){
+
+			console.log(response);
+
 			// Ensenyem un popup conforme no s'ha pogut enviar la petició.
 			$('#sendNotOk').show().delay(5000).fadeOut();
 		},

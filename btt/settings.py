@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '66p9mwr-o&-rugk%3a_^q=%!4)-3l56z4v4hiu@sw2tlld9v7&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -119,7 +119,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/bttviewer')
-STATIC_URL = '/static/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'static/bttviewer')
+STATIC_URL = '/static/bttenginyers/'
 MEDIA_URL = '/static/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')

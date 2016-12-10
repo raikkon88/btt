@@ -56,7 +56,7 @@ def UpdateAnalogObjects(json):
 ##############################################################################
 
 def ProcessJsonObjects(request):
-
+	
 	data = request.POST.keys()
 	objects = json.loads(data[0])
 	for obj in objects:

@@ -96,6 +96,7 @@ function insertListToMap(map, list, path){
 		var obj = new BaseObject();
 		obj.createFromJson(list[i], path);
 		map[obj.getKey()] = obj;
+
 	}
 
 	reloadAllValues(map, list);
@@ -115,16 +116,16 @@ function reloadInfiniteLoop(init, list){
 function reloadAllValues(init, list){
 	
 	for(var o in init){
-		console.log(init[o]);
+		//console.log(init[o]);
 		var element = document.getElementById(o);
 		var string = o+"-value";
 		var element = document.getElementById(string);
 		var string = o+"-image";
 		var image = document.getElementById(string);
-		console.log(element);
+		//console.log(element);
 		doReloadAjax('reload/'+ o + "/", element, image);
 	}
-	reloadInfiniteLoop(init, list);
+	//reloadInfiniteLoop(init, list);
 }
 
 function doReloadAjax(path, element, image){
@@ -136,7 +137,7 @@ function doReloadAjax(path, element, image){
 
     		var jsonResponse = JSON.parse(response);
 
-    		console.log(response);
+    		//console.log(response);
     		if(path.includes("AnalogObject")){
     			if(element != null)
     				element.innerHTML = jsonResponse.value;
@@ -251,7 +252,7 @@ function updateObject(obj, inserted){
 	if(!inserted){
 
 		baseObject = init[obj[0].id];
-		baseObject.update(obj, img);
+		baseObject.update(obj, img,maxWSize,maxHSize,$("#plane_image_id").width(), $("#plane_image_id").height());
 		baseObject.setMoved(true);
 
 		// Eliminem l'element de la llista
@@ -260,15 +261,18 @@ function updateObject(obj, inserted){
 	}
 	else{
 		// Actualitzem els objectes que tenim a les llistes. 
-		init[obj[0].id].update(obj, img);
+		init[obj[0].id].update(obj, img, maxWSize, maxHSize, $("#plane_image_id").width(), $("#plane_image_id").height());
 	}
-
-
+	
 }
 
 // PRE: --
 // POST: Actualitza tots els elements del map global modified
 function save(){
+	// Puts all positions in a standard width and height
+	
+	console.log(init);
+	
 	// Converts all objects in a json map.
 	var json = JSON.stringify(init);
 	// Makes the ajax petition.
@@ -281,6 +285,9 @@ function save(){
     		$('#sendOk').show().delay(5000).fadeOut();
     	},   
 		error: function (response){
+
+			console.log(response);
+
 			// Ensenyem un popup conforme no s'ha pogut enviar la petició.
 			$('#sendNotOk').show().delay(5000).fadeOut();
 		},
