@@ -125,7 +125,7 @@ function reloadAllValues(init, list){
 		//console.log(element);
 		doReloadAjax('reload/'+ o + "/", element, image);
 	}
-	//reloadInfiniteLoop(init, list);
+	reloadInfiniteLoop(init, list);
 }
 
 function doReloadAjax(path, element, image){
