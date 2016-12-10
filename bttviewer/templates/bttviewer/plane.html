@@ -119,9 +119,11 @@
 				console.log(initObj.img_height);
 				console.log(maxHSize);
 				console.log($("#plane_image_id"));
-				console.log($("#plane_image_id").attr("height"));
-				console.log($("#plane_image_id").width());
-				console.log($("#plane_image_id").offsetHeight());
+				console.log($("#plane_image_id").height());
+				
+				var img = document.getElementById('plane_image_id');
+				console.log(img.clientHeight);
+
 
 				var sizeW = ($("#plane_image_id").width() * initObj.img_width) / maxWSize;
 				var sizeH = ($("#plane_image_id").height() * initObj.img_height) / maxHSize;
